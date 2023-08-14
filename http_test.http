@@ -1,0 +1,49 @@
+GET http://127.0.0.1:8080/webhook?hub.mode=subscribe&hub.verify_token=verify_token&hub.challenge=CHECKED
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 200, "Response status is not 200");
+        client.assert(response.body === 'CHECKED', "Error")
+    });
+%}
+
+### Bad Get Request
+
+GET http://127.0.0.1:8080/webhook?hub.mode=subscribe&hub.verify_token=wrong_token&hub.challenge=CHECKED
+
+> {%
+    client.test("Request executed successfully", function () {
+        client.assert(response.status === 403, "Response status is not 200");
+    });
+%}
+
+### WebHook POST
+
+POST http://127.0.0.1:8080/webhook
+Content-Type: application/json
+X-Hub-Signature: 12345TEST
+
+{
+  "object": "Page",
+  "entry": [
+    {
+      "id": "P_ID",
+      "time": 12344567,
+      "messaging": [
+        {
+          "sender": {
+            "id": "SEND_ID"
+          },
+          "recipient": {
+            "id": "RECIPIENT_ID"
+          },
+          "message": {
+            "mid": "12345",
+            "seq": 1,
+            "text": "Hello, bot"
+          }
+        }
+      ]
+    }
+  ]
+}
