@@ -15,11 +15,22 @@ import (
 )
 
 func main() {
+	prod := os.Getenv("IS_PROD")
+	if prod == "true" {
+		model.Prod = true
+	}
+	if model.Prod {
+		model.VerifyToken = os.Getenv("VERIFY_TOKEN")
+		model.AppSecret = os.Getenv("APP_SECRET")
+		model.PageAccessToken = os.Getenv("PAGE_ACCESS_TOKEN")
+		model.NLPToken = os.Getenv("NLP_TOKEN")
+	}
+
 	var srv http.Server
 	srv.Addr = ":8080"
 
 	// app_secret can read from config.
-	webHooker := messenger.NewWebHooker("app_secret")
+	webHooker := messenger.NewWebHooker(model.AppSecret)
 	webHooker.AddMessageHandler(handlers.NewDatabaseMessageHandler(db.NewMessageRepository()))
 	webHooker.AddMessageHandler(handlers.NewNLPHandler(model.NLPToken))
 	webHooker.AddMessageHandler(handlers.NewRobotHandler(model.PageAccessToken, db.NewMessageTemplateRepository()))

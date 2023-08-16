@@ -25,9 +25,13 @@ func NewNLPHandler(token string) *NLPHandler {
 }
 
 func (h *NLPHandler) Handle(ctx context.Context, message *model.Message) error {
-	ic := huggingface.NewInferenceClient(h.Token, func(o *huggingface.InferenceClientOptions) {
-		o.HTTPClient = &MockHuggingFaceClient{}
-	})
+	optFuns := make([]func(o *huggingface.InferenceClientOptions), 0)
+	if !model.Prod {
+		optFuns = append(optFuns, func(o *huggingface.InferenceClientOptions) {
+			o.HTTPClient = &MockHuggingFaceClient{}
+		})
+	}
+	ic := huggingface.NewInferenceClient(h.Token, optFuns...)
 	res, err := ic.ZeroShotClassification(ctx, &huggingface.ZeroShotClassificationRequest{
 		Model:  "facebook/bart-large-mnli",
 		Inputs: []string{message.GetText()},

@@ -38,7 +38,9 @@ func (h *RobotHandler) Handle(ctx context.Context, message *model.Message) error
 		message.GetRecipientID(),
 		messageTemplate.Text,
 	)
-	messenger.HTTPClient = &MockFBClient{}
+	if !model.Prod {
+		messenger.HTTPClient = &MockFBClient{}
+	}
 	return msgSender.SendMessage(ctx, msg, h.PageAccessToken)
 }
 

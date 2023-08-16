@@ -54,10 +54,17 @@ type MessageDataRecipient struct {
 
 const (
 	SendAPIEndpoint = "https://graph.facebook.com/v2.6/me/messages"
+)
+
+var (
+	// Prod if run in prod  model
+	// will not allow to connect fb or huggingface.
+	Prod bool
+
 	VerifyToken     = "verify_token"
 	PageAccessToken = "page_access_token"
-
-	NLPToken = "nlp_token"
+	AppSecret       = "app_secret"
+	NLPToken        = "nlp_token"
 )
 
 type MessageResponse struct {
