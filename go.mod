@@ -4,6 +4,7 @@ go 1.20
 
 require (
 	github.com/hupe1980/go-huggingface v0.0.8
+	github.com/platformsh/config-reader-go/v2 v2.3.1
 	github.com/stretchr/testify v1.8.4
 )
 

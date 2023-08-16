@@ -12,6 +12,8 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+
+	psh "github.com/platformsh/config-reader-go/v2"
 )
 
 func main() {
@@ -27,7 +29,16 @@ func main() {
 	}
 
 	var srv http.Server
-	srv.Addr = ":8080"
+	srv.Addr = ":80"
+
+	if model.Prod {
+		// The Config Reader library provides Platform.sh environment information mapped to Go structs.
+		config, err := psh.NewRuntimeConfig()
+		if err != nil {
+			panic("Not in a Platform.sh Environment.")
+		}
+		srv.Addr = config.Port()
+	}
 
 	// app_secret can read from config.
 	webHooker := messenger.NewWebHooker(model.AppSecret)

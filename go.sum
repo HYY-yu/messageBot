@@ -2,6 +2,8 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/hupe1980/go-huggingface v0.0.8 h1:9WsQqzzjIwi9DpPHU3sCaQoThcDcSvoRReG+kVhMewg=
 github.com/hupe1980/go-huggingface v0.0.8/go.mod h1:IRvsik3+b9BJyw9hCfw1arI6gDObcVto1UA8f3kt8mM=
+github.com/platformsh/config-reader-go/v2 v2.3.1 h1:Lj74RYc2toKhhMV7zgS8Ua2X/fVBgQzd7hrdONioe2U=
+github.com/platformsh/config-reader-go/v2 v2.3.1/go.mod h1:b1XoU9pi4yfOL2HGUKp40BQOhhqJFMNbNXBtwousNR0=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/testify v1.8.4 h1:CcVxjf3Q8PM0mHUKJCdn+eZZtm5yQwehR5yeSVQQcUk=
