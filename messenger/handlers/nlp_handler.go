@@ -33,7 +33,7 @@ func (h *NLPHandler) Handle(ctx context.Context, message *model.Message) error {
 	}
 	ic := huggingface.NewInferenceClient(h.Token, optFuns...)
 	res, err := ic.ZeroShotClassification(ctx, &huggingface.ZeroShotClassificationRequest{
-		Model:  "facebook/bart-large-mnli",
+		Model:  "DeBERTa-v3-base-mnli-fever-anli",
 		Inputs: []string{message.GetText()},
 		Parameters: huggingface.ZeroShotClassificationParameters{
 			CandidateLabels: []string{"positive", "negative"},
