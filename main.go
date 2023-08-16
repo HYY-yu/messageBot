@@ -37,7 +37,7 @@ func main() {
 		if err != nil {
 			panic("Not in a Platform.sh Environment.")
 		}
-		srv.Addr = config.Port()
+		srv.Addr = ":" + config.Port()
 	}
 
 	// app_secret can read from config.
