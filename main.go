@@ -9,9 +9,9 @@ import (
 	"io"
 	"log"
 	"messageBot/db"
+	"messageBot/db/model"
 	"messageBot/messenger"
 	"messageBot/messenger/handlers"
-	"messageBot/messenger/model"
 	"net/http"
 	"os"
 	"os/signal"
@@ -57,7 +57,8 @@ func main() {
 		db.DB = gormDB
 
 		// 定义数据库
-		err = db.DB.AutoMigrate(&db.Message{})
+		err = db.DB.AutoMigrate(&model.MessageTemplateTable{})
+		err = db.DB.AutoMigrate(&model.MessageTable{})
 		if err != nil {
 			log.Fatal(err)
 		}

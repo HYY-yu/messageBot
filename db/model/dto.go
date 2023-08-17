@@ -1,7 +1,7 @@
-package db
+package model
 
-// Message the message table of database, used to save the message which is sent by fb webhook.
-type Message struct {
+// MessageTable the message table of database, used to save the message which is sent by fb webhook.
+type MessageTable struct {
 	ID          string `json:"id" gorm:"primary_key;column:id"`
 	SenderID    string `json:"sender_id" gorm:"column:sender_id"`
 	RecipientID string `json:"recipient_id" gorm:"column:recipient_id"`
@@ -11,7 +11,7 @@ type Message struct {
 }
 
 // MessageTemplate the message template table of database, a bot can use a template to response a Message.
-type MessageTemplate struct {
+type MessageTemplateTable struct {
 	ID             string                        `json:"id" gorm:"primary_key;column:id"`
 	Type           MessageTemplateType           `json:"type" gorm:"column:type"`
 	Text           string                        `json:"text" gorm:"column:text"`

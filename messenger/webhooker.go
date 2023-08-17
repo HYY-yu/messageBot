@@ -6,7 +6,7 @@ import (
 	"crypto/sha1"
 	"fmt"
 	"log"
-	"messageBot/messenger/model"
+	"messageBot/db/model"
 	"sync"
 	"sync/atomic"
 	"time"

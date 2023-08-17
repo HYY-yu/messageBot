@@ -7,8 +7,7 @@ import (
 	"io"
 	"log"
 	"math/rand"
-	"messageBot/db"
-	"messageBot/messenger/model"
+	"messageBot/db/model"
 	"net/http"
 
 	huggingface "github.com/hupe1980/go-huggingface"
@@ -58,9 +57,9 @@ func (h *NLPHandler) Handle(ctx context.Context, message *model.Message) error {
 		}
 		log.Printf("Negative score: %f, Positive score: %f \n", negativeScore, positiveScore)
 		if negativeScore > positiveScore {
-			message.SentimentType = db.MessageTemplateSentimentTypeNegative
+			message.SentimentType = model.MessageTemplateSentimentTypeNegative
 		} else {
-			message.SentimentType = db.MessageTemplateSentimentTypePositive
+			message.SentimentType = model.MessageTemplateSentimentTypePositive
 		}
 	}
 	return nil

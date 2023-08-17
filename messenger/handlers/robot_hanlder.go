@@ -6,8 +6,8 @@ import (
 	"io"
 	"log"
 	"messageBot/db"
+	"messageBot/db/model"
 	"messageBot/messenger"
-	"messageBot/messenger/model"
 	"net/http"
 )
 
@@ -25,7 +25,7 @@ func NewRobotHandler(accessToken string, repo db.MessageTemplateRepository) *Rob
 
 func (h *RobotHandler) Handle(ctx context.Context, message *model.Message) error {
 	if message.SentimentType == "" {
-		message.SentimentType = db.MessageTemplateSentimentTypePositive // default value.
+		message.SentimentType = model.MessageTemplateSentimentTypePositive // default value.
 	}
 	messageTemplate, err := h.Repo.QueryOne(ctx, message.SentimentType)
 	if err != nil {

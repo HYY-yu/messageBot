@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"io"
 	"log"
-	"messageBot/messenger/model"
+	"messageBot/db/model"
 	"net"
 	"net/http"
 	"time"

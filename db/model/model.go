@@ -1,12 +1,10 @@
 package model
 
-import "messageBot/db"
-
 type Message struct {
 	Object string         `json:"object"`
 	Entry  []MessageEntry `json:"entry"`
 
-	SentimentType db.MessageTemplateSentimentType `json:"sentiment_typ,omitempty"`
+	SentimentType MessageTemplateSentimentType `json:"sentiment_typ,omitempty"`
 }
 
 type MessageEntry struct {

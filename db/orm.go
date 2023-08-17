@@ -6,14 +6,14 @@ import (
 	"gorm.io/gorm"
 	"log"
 	"math/rand"
-	"messageBot/messenger/model"
+	"messageBot/db/model"
 	"strconv"
 )
 
 var DB *gorm.DB
 
 type MessageRepository interface {
-	Saves(ctx context.Context, message []Message) error
+	Saves(ctx context.Context, message []model.MessageTable) error
 }
 
 type fakeMessage struct {
@@ -23,7 +23,7 @@ func NewMessageRepository() MessageRepository {
 	return &fakeMessage{}
 }
 
-func (o *fakeMessage) Saves(ctx context.Context, message []Message) error {
+func (o *fakeMessage) Saves(ctx context.Context, message []model.MessageTable) error {
 	if model.Prod {
 		err := DB.Create(message).Error
 		if err != nil {
@@ -37,7 +37,7 @@ func (o *fakeMessage) Saves(ctx context.Context, message []Message) error {
 }
 
 type MessageTemplateRepository interface {
-	QueryOne(ctx context.Context, sentimentType MessageTemplateSentimentType) (*MessageTemplate, error)
+	QueryOne(ctx context.Context, sentimentType model.MessageTemplateSentimentType) (*model.MessageTemplateTable, error)
 }
 
 type fakeMessageTemplate struct {
@@ -47,22 +47,22 @@ func NewMessageTemplateRepository() MessageTemplateRepository {
 	return &fakeMessageTemplate{}
 }
 
-func (o *fakeMessageTemplate) QueryOne(ctx context.Context, sentimentType MessageTemplateSentimentType) (*MessageTemplate, error) {
+func (o *fakeMessageTemplate) QueryOne(ctx context.Context, sentimentType model.MessageTemplateSentimentType) (*model.MessageTemplateTable, error) {
 	messageText := ""
 
 	switch sentimentType {
-	case MessageTemplateSentimentTypeNegative:
+	case model.MessageTemplateSentimentTypeNegative:
 		messageText = NegativeMessages[rand.Intn(len(NegativeMessages))]
-	case MessageTemplateSentimentTypePositive:
+	case model.MessageTemplateSentimentTypePositive:
 		messageText = PositiveMessages[rand.Intn(len(PositiveMessages))]
 	default:
 		return nil, errors.New("invalid sentiment type")
 	}
 
-	result := &MessageTemplate{
+	result := &model.MessageTemplateTable{
 		ID:   "TemplateID" + strconv.Itoa(rand.Intn(10000)),
 		Text: messageText,
-		Type: MessageTemplateTypeText,
+		Type: model.MessageTemplateTypeText,
 
 		SentimentType: sentimentType,
 	}
