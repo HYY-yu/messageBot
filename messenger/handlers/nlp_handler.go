@@ -36,7 +36,7 @@ func (h *NLPHandler) Handle(ctx context.Context, message *model.Message) error {
 		Model:  "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli",
 		Inputs: []string{message.GetText()},
 		Parameters: huggingface.ZeroShotClassificationParameters{
-			CandidateLabels: []string{"positive", "negative"},
+			CandidateLabels: []string{"negative", "positive"},
 		},
 	})
 	if err != nil {
@@ -47,6 +47,7 @@ func (h *NLPHandler) Handle(ctx context.Context, message *model.Message) error {
 		// the labels sorted in descending order.
 		negativeScore := res[0].Scores[0]
 		positiveScore := res[0].Scores[1]
+		log.Printf("Negative score: %f, Positive score: %f", negativeScore, positiveScore)
 		if negativeScore > positiveScore {
 			message.SentimentType = db.MessageTemplateSentimentTypeNegative
 		} else {
