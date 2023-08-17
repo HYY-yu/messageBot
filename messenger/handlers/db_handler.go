@@ -25,7 +25,7 @@ func (h *DatabaseMessageHandler) Handle(ctx context.Context, message *model.Mess
 				SenderID:    data.Sender.ID,
 				RecipientID: data.Recipient.ID,
 				Timestamp:   e.Time,
-				MessageJson: data.Message.Text,
+				MessageText: data.Message.Text,
 			}
 			messageDbs = append(messageDbs, *dbMsg)
 		}

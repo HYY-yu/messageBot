@@ -7,7 +7,7 @@ type Message struct {
 	RecipientID string `json:"recipient_id" gorm:"column:recipient_id"`
 	Timestamp   int    `json:"timestamp" gorm:"column:timestamp"`
 
-	MessageJson string `json:"message_json" gorm:"column:message_json"`
+	MessageText string `json:"message_json" gorm:"column:message_json"`
 }
 
 // MessageTemplate the message template table of database, a bot can use a template to response a Message.

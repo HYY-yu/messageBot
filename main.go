@@ -3,6 +3,9 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"github.com/platformsh/config-reader-go/v2/sqldsn"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 	"io"
 	"log"
 	"messageBot/db"
@@ -38,6 +41,26 @@ func main() {
 			panic("Not in a Platform.sh Environment.")
 		}
 		srv.Addr = ":" + config.Port()
+
+		credentials, err := config.Credentials("mysql_database")
+		if err != nil {
+			log.Fatal(err)
+		}
+		formatted, err := sqldsn.FormattedCredentials(credentials)
+		if err != nil {
+			log.Fatal(err)
+		}
+		gormDB, err := gorm.Open(mysql.Open(formatted), &gorm.Config{})
+		if err != nil {
+			log.Fatal(err)
+		}
+		db.DB = gormDB
+
+		// 定义数据库
+		err = db.DB.AutoMigrate(&db.Message{})
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	// app_secret can read from config.
