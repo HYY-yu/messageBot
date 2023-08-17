@@ -78,6 +78,7 @@ func NewTextMessage(recipientID string, text string) *TextMessage {
 
 func (m *TextMessage) ToJson() []byte {
 	b, _ := json.Marshal(m)
+	log.Println("to json: ", string(b))
 	return b
 }
 
