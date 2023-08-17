@@ -45,10 +45,17 @@ func (h *NLPHandler) Handle(ctx context.Context, message *model.Message) error {
 	}
 
 	if len(res) > 0 && len(res[0].Labels) == 2 {
-		log.Printf("check res is %v \n", res)
+		log.Printf("the huggingface res is %v \n", res)
 		// the labels sorted in descending order.
-		negativeScore := res[0].Scores[0]
-		positiveScore := res[0].Scores[1]
+		var negativeScore, positiveScore float64
+		switch res[0].Labels[0] {
+		case "negative":
+			negativeScore = res[0].Scores[0]
+			positiveScore = res[0].Scores[1]
+		case "positive":
+			positiveScore = res[0].Scores[0]
+			negativeScore = res[0].Scores[1]
+		}
 		log.Printf("Negative score: %f, Positive score: %f \n", negativeScore, positiveScore)
 		if negativeScore > positiveScore {
 			message.SentimentType = db.MessageTemplateSentimentTypeNegative
