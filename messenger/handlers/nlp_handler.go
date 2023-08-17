@@ -32,6 +32,7 @@ func (h *NLPHandler) Handle(ctx context.Context, message *model.Message) error {
 		})
 	}
 	ic := huggingface.NewInferenceClient(h.Token, optFuns...)
+	log.Println("InferenceClient text is ", message.GetText())
 	res, err := ic.ZeroShotClassification(ctx, &huggingface.ZeroShotClassificationRequest{
 		Model:  "MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli",
 		Inputs: []string{message.GetText()},
@@ -44,10 +45,11 @@ func (h *NLPHandler) Handle(ctx context.Context, message *model.Message) error {
 	}
 
 	if len(res) > 0 && len(res[0].Labels) == 2 {
+		log.Printf("check res is %v \n", res)
 		// the labels sorted in descending order.
 		negativeScore := res[0].Scores[0]
 		positiveScore := res[0].Scores[1]
-		log.Printf("Negative score: %f, Positive score: %f", negativeScore, positiveScore)
+		log.Printf("Negative score: %f, Positive score: %f \n", negativeScore, positiveScore)
 		if negativeScore > positiveScore {
 			message.SentimentType = db.MessageTemplateSentimentTypeNegative
 		} else {
