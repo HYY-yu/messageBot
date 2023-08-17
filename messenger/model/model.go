@@ -21,6 +21,13 @@ type MessageData struct {
 	Message   MessageDataMessage   `json:"message,omitempty"`
 }
 
+func (m *Message) GetSenderID() string {
+	if len(m.Entry) > 0 && len(m.Entry[0].MessageData) > 0 {
+		return m.Entry[0].MessageData[0].Sender.ID
+	}
+	return ""
+}
+
 func (m *Message) GetRecipientID() string {
 	if len(m.Entry) > 0 && len(m.Entry[0].MessageData) > 0 {
 		return m.Entry[0].MessageData[0].Recipient.ID

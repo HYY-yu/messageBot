@@ -35,7 +35,7 @@ func (h *RobotHandler) Handle(ctx context.Context, message *model.Message) error
 	msgSender := new(messenger.Messenger)
 
 	msg := messenger.NewTextMessage(
-		message.GetRecipientID(),
+		message.GetSenderID(),
 		messageTemplate.Text,
 	)
 	if !model.Prod {
