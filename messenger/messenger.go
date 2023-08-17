@@ -65,14 +65,16 @@ func (b *Messenger) post(ctx context.Context, url string, data []byte, token str
 
 type TextMessage struct {
 	model.MessageResponse
-	Text string `json:"text"`
+	Message struct {
+		Text string `json:"text"`
+	} `json:"message"`
 }
 
 func NewTextMessage(recipientID string, text string) *TextMessage {
 	var t TextMessage
 	t.MessageType = "RESPONSE"
 	t.Recipient.ID = recipientID
-	t.Text = text
+	t.Message.Text = text
 	return &t
 }
 
